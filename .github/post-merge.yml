@@ -1,0 +1,18 @@
+on:
+  pull_request:
+    types:
+      - closed
+
+jobs:
+  remove_branch_manifests:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+      - name: Extract branch name
+        shell: bash
+        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+        id: extract_branch
+      
+      - name: Remove manifests
+        shell: bash
+        run: rm -rf 
