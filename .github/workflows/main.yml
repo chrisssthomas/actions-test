@@ -4,3 +4,14 @@ on:
       - main
       - master
 
+jobs:
+  make_file:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Extract branch name
+        shell: bash
+        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/ | sed 's+/+-+g' | tr '[:upper:]' '[:lower:]})"
+        id: extract_branch
+
+      - name: Make File
+        run: cd .k8s && mkdir -p ${{ steps.extract_branch.outputs.branch }} && touch ${{ steps.extract_branch.outputs.branch }}/index.js
