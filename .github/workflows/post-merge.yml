@@ -10,12 +10,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-
-      - name: Extract branch name
-        shell: bash
-        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF##*/} | sed 's+/+-+g'" 
-        id: extract_branch
-      
+        
       - name: Remove manifests
         shell: bash
-        run: rm -rf ${{ steps.extract_branch.outputs.branch }}
+        run: rm -rf $(echo ${{ github.head_ref }} | sed 's+/+-+g')

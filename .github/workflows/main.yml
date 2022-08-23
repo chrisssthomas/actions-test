@@ -11,10 +11,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Extract branch name
-        shell: bash
-        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF##*/} | sed 's+/+-+g'"
-        id: extract_branch
-
       - name: Make File
-        run: cd .k8s && mkdir -p ${{ steps.extract_branch.outputs.branch }} && touch ${{ steps.extract_branch.outputs.branch }}/index.js
+        run: |
+          BRANCH=$(echo ${{ github.head_ref }} | sed 's+/+-+g')
+          cd .k8s && mkdir -p $BRANCH  && touch $BRANCH/index.js
