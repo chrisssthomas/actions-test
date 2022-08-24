@@ -17,6 +17,7 @@ jobs:
         shell: bash
         run: |
           BRANCH=$(echo ${{ github.head_ref }} | sed 's+/+-+g')
+          cd .k8s
           rm -rf $BRANCH
 
       - name: Add & Commit
